@@ -1,0 +1,47 @@
+
+
+There are several syslog formats:
+
+  SYSLOGv0:
+    <3>2023-01-01T12:00:00Z foo.example.com appname[12345]: FOO_OK This is message text.
+
+  SYSLOGv1:
+    <3>1 2023-01-01T12:00:00Z foo.example.com appname 12345 FOO_OK - This is message text.
+
+  SYSLOGv1 with Structured Data:
+    <3>1 2023-01-01T12:00:00Z foo.example.com appname 12345 FOO_OK [foobar@devever.net foo="abc" bar="def"] This is message text.
+
+
+Possible mappings:
+  LCD=Lowest Common Denominator
+
+  Protocol =
+    SYSLOGv0-LOCAL
+    SYSLOGv0-NET
+    SYSLOGv1
+
+  Format =
+    JSON
+    Text
+
+  LCD0L-JSON: (Local SYSLOG)
+    <3>Oct  5 12:05:00 appname[12345]: foobar.REQ_OK {"error":"..."}
+
+  LCD0-JSON:
+    => Use message ID field, body is JSON
+
+    <3>2023-01-01T12:00:00Z foo.example.com appname[12345]: foobar.REQ_OK {"error":"..."}
+
+  LCD0-Text:
+    => Use message ID field, body is text
+    <3>2023-01-01T12:00:00Z foo.example.com appname[12345]: foobar.REQ_OK error="This is an error"
+
+* LCD1-JSON:
+    <3>1 2023-01-01T12:00:00Z foo.example.com appname 12345 foobar.REQ_OK - {"error":"..."}
+
+* LCD1-Text:
+    <3>1 2023-01-01T12:00:00Z foo.example.com appname 12345 foobar.REQ_OK - error="This is an error"
+
+  LCD1-SD:
+    <3>1 2023-01-01T12:00:00Z foo.example.com appname 12345 foobar.REQ_OK [foo@xxx.com foo="abc" bar="def"] ...
+
